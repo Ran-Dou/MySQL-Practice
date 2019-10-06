@@ -1,0 +1,81 @@
+-- Preliminaries
+DROP   DATABASE IF EXISTS db_countries;
+CREATE DATABASE db_countries;
+USE    db_countries;
+
+-- Creating the Entities (Tables)
+CREATE TABLE continents(
+  id              INT unsigned NOT NULL AUTO_INCREMENT, # Unique ID for the record
+  NAME            VARCHAR(100) NOT NULL,                # Name of the continent
+  SURFACE         INT                  ,                # Surface of the continent in number of s
+  POPULATION      BIGINT               ,                # Number of people. Integer number
+  PRIMARY KEY     (id)                                  # Make the id the primary key
+);
+
+
+CREATE TABLE countries(
+  ID_COUNTRY      INT unsigned NOT NULL AUTO_INCREMENT, # Unique ID for the record                        
+  NAME            VARCHAR(100) NOT NULL,                # NAME OF the country                
+  CONTINENT       INT unsigned NOT NULL,                # NAME of the continent where the country is located                                   
+  SURFACE         INT,                                  #                                    
+  POPULATION      INT,                                  #                                    
+  CAPITAL         INT unsigned,                         #                                    
+  PRIMARY KEY     (ID_COUNTRY)                          #
+  CHECK(...AND...)                            
+);
+
+
+CREATE TABLE cities(
+  ID_CITY         INT unsigned NOT NULL AUTO_INCREMENT, #                          
+  CITY_NAME_CHAR  VARCHAR(100) NOT NULL,                #                 
+  SURFACE         INT,                                  #                  
+  POPULATION      INT,                                  #                  
+  PRIMARY KEY     (ID_CITY)                             #                  
+);
+
+
+CREATE TABLE attractions(
+  id              INT unsigned NOT NULL AUTO_INCREMENT, # 
+  name            VARCHAR(100) NOT NULL,                # 
+  city            VARCHAR(100) NOT NULL,                # 
+  PRIMARY KEY     (id)                                  # 
+);
+
+
+-- Adding Foreign keys
+ALTER TABLE countries   ADD CONSTRAINT FK_countriesContinents  FOREIGN KEY (CONTINENT) REFERENCES continents(id);
+ALTER TABLE countries   ADD CONSTRAINT FK_citiesCountries      FOREIGN KEY (capital)    REFERENCES cities(ID_CITY);
+
+
+
+
+
+
+-- Populating the data using mySQL ROW BY ROW
+INSERT   INTO continents(id, NAME, SURFACE, POPULATION)  VALUES ( 1, 'EUROPE',  10180000,  731000000) ,
+                                                                ( 2, 'AMERICA', 42330000,  910000000),
+                                                                ( 3, 'OCEANIA',  9008458,   38889988),
+                                                                ( 4, 'ASIA',    44579000,  4462676731),
+                                                                ( 5, 'AFRICA',  30370000,  1225080510);
+
+
+
+INSERT   INTO cities(ID_CITY, CITY_NAME_CHAR, SURFACE, POPULATION ) VALUES (1,	'Madrid',	    605.77,	3141991),
+                                                                           (2,	'Barcelona',	102.15,	1604555),
+                                                                           (3,	'Paris',	     105.4,	2229621),
+                                                                           (4,	'Ottawa',	   2778.64, 1083391),
+                                                                           (5,	'New York',	      1214,	8491079),
+                                                                           (6,	'Berlin',	   891.68 , 3469849),
+                                                                           (7,	'Canberra',	   814.2  , 381488);
+
+
+INSERT   INTO countries(ID_COUNTRY,	NAME,	CONTINENT,	SURFACE,	POPULATION,	CAPITAL) VALUES (1,	'Spain',	1,	505370,	 46438422,	1),
+                                                                                                (2,	'France',	1,	643801,  64590000,	3),
+                                                                                                (3,	'Canada',	2,	9984670, 36155487,	4),
+                                                                                                (4,	'Germany',	1,	357022,	 81770900,	6),
+                                                                                                (5,	'Australia',3,	7692024, 23613193,	7);
+
+
+DESCRIBE continents;
+SELECT *                   FROM continents;
+
